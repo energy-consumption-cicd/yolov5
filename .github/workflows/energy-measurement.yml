@@ -51,6 +51,7 @@ jobs:
             echo "    ~/experimentos/repositorios/training-intensive/yolov5/"
             exit 1
           fi
+          echo "Docker image found."
           docker image inspect yolov5-medicao --format '{{.Created}}'
 
       - name: Validation run (run 0)
