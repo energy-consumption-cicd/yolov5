@@ -214,5 +214,5 @@ jobs:
           # artifact; the exclusion follows the single include.
           path: |
             ${{ env.HOME_DIR }}/experimentos/medicao/resultados/yolov5/
-            !${{ env.HOME_DIR }}/experimentos/medicao/resultados/yolov5/NOTA_FIDELIDADE.md
+            !${{ env.HOME_DIR }}/experimentos/medicao/resultados/yolov5/NOTA_FIDELIDADE*.md
           retention-days: 90
