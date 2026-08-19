@@ -156,17 +156,17 @@ measure_stage() {
   ini_gpu=$(read_rapl gpu)
   ini_ram=$(read_rapl ram)
 
+  # --network none: all inputs are pre-baked into the image; measured energy
+  # must not include network traffic (construct definition).
+  # fd3 preserves the workload stderr while `time` captures wall/user/sys inside
+  # the container, so child CPU time is attributed to the stage.
   /usr/bin/time -f "%e" -o "$TIME_FILE" \
-    # --network none: all inputs are pre-baked into the image; measured energy
-    # must not include network traffic (construct definition).
     docker run --rm --privileged --network none \
       -v "$MEDICAO_DIR:/medicao:ro" \
       -v "$timing_dir:/timing" \
       -e "STAGE=$stage" \
       "$IMAGE_NAME" \
       bash -c 'exec 3>&2; TIMEFORMAT="%R %U %S"; { time bash /medicao/commands.sh "$STAGE" 2>&3; } 2>/timing/time.txt'
-  # fd3 preserves the workload stderr while `time` captures wall/user/sys
-  # inside the container, so child CPU time is attributed to the stage.
 
   local fin_pkg fin_cores fin_gpu fin_ram
   fin_pkg=$(read_rapl pkg)
