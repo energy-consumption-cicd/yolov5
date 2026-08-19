@@ -102,7 +102,7 @@ echo ""
 echo " Run $RUN_NUM - $PROJECT_NAME"
 echo " $(date '+%Y-%m-%d %H:%M:%S')"
 echo ""
-echo "⏳ Repouso para baseline (${BASELINE_DURATION}s)..."
+echo "Baseline rest (${BASELINE_DURATION}s)..."
 
 b_pkg_ini=$(read_rapl pkg)
 b_cores_ini=$(read_rapl cores)
@@ -131,7 +131,7 @@ taxa_cores=$(awk "BEGIN {printf \"%.6f\", $b_delta_cores / $BASELINE_DURATION}")
 taxa_gpu=$(awk  "BEGIN {printf \"%.6f\", $b_delta_gpu  / $BASELINE_DURATION}")
 taxa_ram=$(awk  "BEGIN {printf \"%.6f\", $b_delta_ram  / $BASELINE_DURATION}")
 
-echo " Baseline calculado:"
+echo "Baseline rate:"
 echo "   pkg:   $(awk "BEGIN {printf \"%.2f\", $taxa_pkg / 1e6}") W"
 echo "   cores: $(awk "BEGIN {printf \"%.2f\", $taxa_cores / 1e6}") W"
 echo "   ram:   $(awk "BEGIN {printf \"%.2f\", $taxa_ram / 1e6}") W"
@@ -197,7 +197,7 @@ measure_stage() {
 
   j_ram_raw=$(awk "BEGIN {printf \"%.6f\", ($d_ram - $taxa_ram * $wall) / 1e6}")
 
-  echo "   ▶ ram: delta=${d_ram}µJ baseline=$(awk "BEGIN {printf \"%.0f\", $taxa_ram * $wall}")µJ net=$(awk "BEGIN {printf \"%.3f\", ($d_ram - $taxa_ram * $wall) / 1e6}")J  ${j_ram}J"
+  echo "  ram: delta=${d_ram}µJ baseline=$(awk "BEGIN {printf \"%.0f\", $taxa_ram * $wall}")µJ net=$(awk "BEGIN {printf \"%.3f\", ($d_ram - $taxa_ram * $wall) / 1e6}")J  ${j_ram}J"
 
   echo "$RUN_NUM,$stage,$j_pkg,$j_cores,$j_gpu,$j_ram,$wall,$user_t,$sys_t,$j_ram_raw,$wall_container_t" >> "$CSV_FILE"
 
