@@ -32,9 +32,11 @@ ENV UV_CACHE_DIR=/uv-cache
 COPY . /project
 WORKDIR /project
 
+# Reproduce the dependency resolution of the original campaign image (built 2026-07-11).
 RUN uv pip install -r requirements.txt \
         --extra-index-url https://download.pytorch.org/whl/cpu \
-        --index-strategy unsafe-best-match
+        --index-strategy unsafe-best-match \
+        --exclude-newer 2026-07-11T00:37:18Z
 
 RUN wget -q -P /project \
         https://github.com/ultralytics/yolov5/releases/download/v7.0/yolov5n.pt \
